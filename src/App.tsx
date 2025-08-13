@@ -38,61 +38,63 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/hotels" element={<Hotels />} />
-              <Route path="/clothing" element={<Clothing />} />
-              <Route path="/pets" element={<Pets />} />
-              <Route path="/printed-items" element={<PrintedItems />} />
-              <Route path="/medical-insurance" element={<MedicalInsurance />} />
-              <Route path="/agriculture" element={<Agriculture />} />
-              <Route path="/electronics" element={<Electronics />} />
-              <Route path="/vehicles" element={<Vehicles />} />
-              <Route path="/fitness" element={<Fitness />} />
-              <Route path="/careers" element={<Careers />} />
-              <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              
-              {/* Admin Routes */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route 
-                path="/admin/dashboard" 
-                element={
-                  <AdminRoute>
-                    <AdminDashboard />
-                  </AdminRoute>
-                } 
-              />
-              <Route 
-                path="/admin/products/:category" 
-                element={
-                  <AdminRoute>
-                    <AdminProducts />
-                  </AdminRoute>
-                } 
-              />
-              <Route 
-                path="/admin/products/:category/add" 
-                element={
-                  <AdminRoute>
-                    <AdminProductForm />
-                  </AdminRoute>
-                } 
-              />
-              <Route 
-                path="/admin/products/:category/edit/:productId" 
-                element={
-                  <AdminRoute>
-                    <AdminProductForm />
-                  </AdminRoute>
-                } 
-              />
-              
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/hotels" element={<Hotels />} />
+                <Route path="/clothing" element={<Clothing />} />
+                <Route path="/pets" element={<Pets />} />
+                <Route path="/printed-items" element={<PrintedItems />} />
+                <Route path="/medical-insurance" element={<MedicalInsurance />} />
+                <Route path="/agriculture" element={<Agriculture />} />
+                <Route path="/electronics" element={<Electronics />} />
+                <Route path="/vehicles" element={<Vehicles />} />
+                <Route path="/fitness" element={<Fitness />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                
+                {/* Admin Routes */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route 
+                  path="/admin/dashboard" 
+                  element={
+                    <AdminRoute>
+                      <AdminDashboard />
+                    </AdminRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/products/:category" 
+                  element={
+                    <AdminRoute>
+                      <AdminProducts />
+                    </AdminRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/products/:category/add" 
+                  element={
+                    <AdminRoute>
+                      <AdminProductForm />
+                    </AdminRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/products/:category/edit/:productId" 
+                  element={
+                    <AdminRoute>
+                      <AdminProductForm />
+                    </AdminRoute>
+                  } 
+                />
+                
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </BrowserRouter>
         </AdminProvider>
       </CartProvider>
