@@ -41,6 +41,7 @@ const Header = () => {
   const [showSignup, setShowSignup] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false); // New state for mobile search bar
   const { login, isLoading } = useAdmin();
   const navigate = useNavigate();
 
@@ -92,7 +93,6 @@ const Header = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Perform search across categories and products
       const query = searchQuery.trim().toLowerCase();
       const results = {
         categories: searchData.categories.filter(category =>
@@ -105,12 +105,17 @@ const Header = () => {
       };
 
       console.log('Search results:', results);
-      // Navigate to search results page with query
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`, { state: { searchResults: results } });
       setSearchQuery('');
+      setIsSearchOpen(false); // Close search bar after search
     } else {
       toast.error('Please enter a search query');
     }
+  };
+
+  const toggleSearchBar = () => {
+    setIsSearchOpen(!isSearchOpen);
+    if (isSearchOpen) setSearchQuery(''); // Clear search query when closing
   };
 
   const navItems = [
@@ -158,6 +163,7 @@ const Header = () => {
           </nav>
           
           <div className="flex items-center space-x-2 sm:space-x-4">
+            {/* Desktop Search Bar */}
             <form onSubmit={handleSearch} className="hidden sm:flex items-center">
               <input
                 type="text"
@@ -175,13 +181,14 @@ const Header = () => {
               </Button>
             </form>
 
+            {/* Mobile Search Icon */}
             <Button
               variant="outline"
               size="icon"
               className="sm:hidden p-1 border-gray-300 bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-800 transition-colors duration-200"
-              onClick={() => navigate('/search')}
+              onClick={toggleSearchBar}
             >
-              <Search className="h-5 w-5" />
+              {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
             </Button>
 
             <Link to="/cart">
@@ -308,7 +315,7 @@ const Header = () => {
                             <input
                               type="tel"
                               name="mobile"
-                              className="mt retir-1 block w-full p-2 border border-gray-300 rounded-md text-sm"
+                              className="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm"
                               placeholder="Enter mobile number"
                               required
                             />
@@ -360,6 +367,29 @@ const Header = () => {
             </Button>
           </div>
         </div>
+
+        {/* Mobile Search Bar */}
+        {isSearchOpen && (
+          <form onSubmit={handleSearch} className="sm:hidden mt-4 pb-4 border-t border-gray-200">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search categories & products..."
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 bg-white text-gray-700 transition-all duration-300 ease-in-out transform origin-top scale-y-0 data-[state=open]:scale-y-100"
+                data-state={isSearchOpen ? 'open' : 'closed'}
+              />
+              <Button
+                type="submit"
+                variant="outline"
+                className="absolute right-0 top-0 h-full border-l-0 rounded-l-none rounded-r-md p-2 bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-800 transition-colors duration-200"
+              >
+                <Search className="h-5 w-5" />
+              </Button>
+            </div>
+          </form>
+        )}
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
